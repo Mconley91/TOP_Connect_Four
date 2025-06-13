@@ -3,6 +3,7 @@
 require './lib/main.rb'
 
 describe Game do
+
   subject(:new_game){described_class.new}
   describe '#make_board' do
     it 'create an array' do
@@ -22,4 +23,6 @@ describe Game do
       expect(new_game.game_board.all?{|array| array.length == 7}).to be true
     end
   end
+
+  
 end
