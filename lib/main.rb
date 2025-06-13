@@ -13,6 +13,16 @@ class Game
     @game_board = Array.new(6, Array.new(7, '_'))
   end
 
+  def make_play
+    loop do
+      play = gets.chomp
+      return play if play =~ /[1-7]/
+      p 'invalid input, try again!'
+    end
+  end
+
+  #methods for visual readout to console
+
   def display_board
     @game_board.each{|element| p element}
   end
@@ -33,6 +43,7 @@ class Game
 end
 
 # test play area
-test_game = Game.new
-test_game.make_board
-test_game.display_game
+# test_game = Game.new
+# test_game.make_board
+# test_game.display_game
+# test_game.make_play
