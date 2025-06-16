@@ -9,8 +9,9 @@ class Game
     @game_board= []
   end
 
+  # row array is reversed so that indexes match with display
   def make_board
-    @game_board = Array.new(6){Array.new(7){"_"}}
+    @game_board = Array.new(6){Array.new(7){"_"}.reverse}
   end
 
   def make_play
@@ -22,7 +23,8 @@ class Game
   end
 
   def place_play(column)
-    @game_board.reverse.each do|row| 
+    # check for full columns
+    @game_board.each do|row| 
       if row[column - 1] == '_'
         row[column - 1] = @player_turn
         return
@@ -30,10 +32,18 @@ class Game
     end
   end
 
+  def full_column?(column)
+    # check for full columns
+  end
+
   #methods for visual readout to console
+  
+  def display_column_numbers
+    p %w(1 2 3 4 5 6 7)
+  end
 
   def display_board
-    @game_board.each{|element| p element}
+    @game_board.reverse.each{|element| p element}
   end
 
   def display_round
@@ -47,13 +57,14 @@ class Game
   def display_game
     display_round
     display_player_turn
+    display_column_numbers
     display_board
   end
 end
 
 # test play area-------------
-# test_game = Game.new
-# test_game.make_board
-# test_game.make_play
-# test_game.place_play(3)
-# test_game.display_game
+test_game = Game.new
+test_game.make_board
+# test_game.make_play # to get user input later
+test_game.place_play(3)
+test_game.display_game

@@ -43,11 +43,29 @@ describe Game do
 
   describe '#place_play' do
     subject(:place_game){described_class.new}
-    context 'places a token in a given column' do
-      it 'places a token in the lowest row possible for that column' do
-        # column = 5
-        # place_game.place_play(column)
-        # expect(place_game.game_board[6][4]).to eq('X')
+    context 'places a token in a given column' do  
+      it 'places a token in the bottom row of the left column' do
+        column_left = 1
+        place_game.make_board
+        place_game.place_play(column_left)
+        # place_game.display_board
+        expect(place_game.game_board[0][0]).to eq('X'||'O')
+      end
+
+      it 'places a token in the bottom row of the right column' do
+        column_right= 7
+        place_game.make_board
+        place_game.place_play(column_right)
+        # place_game.display_board
+        expect(place_game.game_board[0][6]).to eq('X'||'O')
+      end
+
+      it 'places a token in the bottom row of the middle column' do
+        column_middle= 4
+        place_game.make_board
+        place_game.place_play(column_middle)
+        place_game.display_board
+        expect(place_game.game_board[0][3]).to eq('X'||'O')
       end
     end
   end
