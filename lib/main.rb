@@ -23,7 +23,6 @@ class Game
   end
 
   def place_play(column)
-    # check for full columns
     @game_board.each do|row| 
       if row[column - 1] == '_'
         row[column - 1] = @player_turn
@@ -33,7 +32,7 @@ class Game
   end
 
   def full_column?(column)
-    # check for full columns
+    @game_board[5][column - 1] != '_'
   end
 
   #methods for visual readout to console

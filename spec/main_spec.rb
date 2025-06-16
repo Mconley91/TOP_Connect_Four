@@ -64,8 +64,38 @@ describe Game do
         column_middle= 4
         place_game.make_board
         place_game.place_play(column_middle)
-        place_game.display_board
+        # place_game.display_board
         expect(place_game.game_board[0][3]).to eq('X'||'O')
+      end
+    end
+  end
+
+  describe '#full_column?' do
+  subject(:test_column_game){described_class.new}
+    context 'returns a bool' do
+      it 'returns true when the selected column is full' do
+        column_two = 2
+        test_column_game.make_board
+        test_column_game.place_play(column_two)
+        test_column_game.place_play(column_two)
+        test_column_game.place_play(column_two)
+        test_column_game.place_play(column_two)
+        test_column_game.place_play(column_two)
+        test_column_game.place_play(column_two)
+        # test_column_game.display_board
+        expect(test_column_game.full_column?(column_two)).to be true
+      end
+
+      it 'returns false when the selected column is not full' do
+        column_four = 4
+        test_column_game.make_board
+        test_column_game.place_play(column_four)
+        test_column_game.place_play(column_four)
+        test_column_game.place_play(column_four)
+        test_column_game.place_play(column_four)
+        test_column_game.place_play(column_four)
+        # test_column_game.display_board
+        expect(test_column_game.full_column?(column_four)).to be false
       end
     end
   end
