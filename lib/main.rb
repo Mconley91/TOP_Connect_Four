@@ -21,32 +21,36 @@ class Game
   def make_play
     loop do
       play = gets.chomp
-      return play if play =~ /[1-7]/
+      return play.to_i - 1 if play =~ /[1-7]/ && !self.full_column?(play.to_i - 1)
       p 'invalid input!'
     end
   end
 
   def place_play(column)
     @game_board.each do|row| 
-      if row[column - 1] == '_'
-        row[column - 1] = @player_turn
+      if row[column] == '_'
+        row[column] = @player_turn
         return
       end
     end
   end
 
   def full_column?(column)
-    @game_board[5][column - 1] != '_'
+    @game_board[5][column] != '_'
   end
 
   def cycle_player(player)
     @player_turn = player == 'X' ? 'O' : 'X'
   end
 
+  def handle_play
+    play = make_play
+
+  end
 end
 
 # test play area-------------
-test_game = Game.new
-test_game.make_board
-test_game.make_play # to get user input later
-test_game.display_game
+# test_game = Game.new
+# test_game.make_board
+# test_game.make_play 
+# test_game.display_game

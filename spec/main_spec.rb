@@ -28,15 +28,17 @@ describe Game do
     subject(:play_game){described_class.new}
     context 'takes player input and returns it if valid'do
       before do
-        allow(play_game).to receive(:gets).and_return('0','1')
+        allow(play_game).to receive(:gets).and_return('apple','2')
         allow(play_game).to receive(:p) #prevents p statements from printing to console
       end
       it 'prints a message to the console if input is invalid' do
+        play_game.make_board
         expect(play_game).to receive(:p).with('invalid input!').once
         play_game.make_play
       end
-      it 'returns a valid input' do
-        expect(play_game.make_play).to eq('1')
+      it 'takes a column number and returns a valid index position' do
+        play_game.make_board
+        expect(play_game.make_play).to eq(1)
       end
     end
   end
@@ -45,7 +47,7 @@ describe Game do
     subject(:place_game){described_class.new}
     context 'places a token in a given column' do  
       it 'places a token in the bottom row of the left column' do
-        column_left = 1
+        column_left = 0
         place_game.make_board
         place_game.place_play(column_left)
         # place_game.display_board
@@ -53,7 +55,7 @@ describe Game do
       end
 
       it 'places a token in the bottom row of the right column' do
-        column_right= 7
+        column_right= 6
         place_game.make_board
         place_game.place_play(column_right)
         # place_game.display_board
@@ -61,7 +63,7 @@ describe Game do
       end
 
       it 'places a token in the bottom row of the middle column' do
-        column_middle= 4
+        column_middle= 3
         place_game.make_board
         place_game.place_play(column_middle)
         # place_game.display_board
