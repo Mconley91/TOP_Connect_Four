@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
+require './lib/output.rb'
+
 class Game 
-  attr_accessor :game_board
+  attr_accessor :game_board , :player_turn
   
   def initialize
     @round = 1
     @player_turn = 'X'
     @game_board= []
   end
+
+  include Output_To_Terminal
 
   # row array is reversed so that indexes match with display
   def make_board
@@ -35,35 +39,14 @@ class Game
     @game_board[5][column - 1] != '_'
   end
 
-  #methods for visual readout to console
-  
-  def display_column_numbers
-    p %w(1 2 3 4 5 6 7)
+  def cycle_player(player)
+    @player_turn = player == 'X' ? 'O' : 'X'
   end
 
-  def display_board
-    @game_board.reverse.each{|element| p element}
-  end
-
-  def display_round
-    puts "ROUND: #{@round}"
-  end
-
-  def display_player_turn
-    puts "It is now #{@player_turn}'s turn"
-  end
-
-  def display_game
-    display_round
-    display_player_turn
-    display_column_numbers
-    display_board
-  end
 end
 
 # test play area-------------
 test_game = Game.new
 test_game.make_board
-# test_game.make_play # to get user input later
-test_game.place_play(3)
+test_game.make_play # to get user input later
 test_game.display_game

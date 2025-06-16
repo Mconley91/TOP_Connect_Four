@@ -100,4 +100,21 @@ describe Game do
     end
   end
 
+  describe '#cycle_player' do
+    subject(:test_player_game){described_class.new}
+    context 'changes the current player' do
+      it "changes the current player to 'O' if player_turn is 'X'" do
+        player = 'X'
+        test_player_game.cycle_player(player)
+        expect(test_player_game.player_turn).to be 'O'
+      end
+
+      it "changes the current player to 'X' if player_turn is 'O'" do
+        player = 'O'
+        test_player_game.cycle_player(player)
+        expect(test_player_game.player_turn).to be 'X'
+      end
+    end
+  end
+
 end
