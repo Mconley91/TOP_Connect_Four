@@ -114,4 +114,16 @@ describe Game do
       end
     end
   end
+
+  describe '#winning_plays' do
+    context 'returns a bool if there is a winner' do
+      it 'returns true when a player has won' do
+        
+      end
+      it 'returns false if no player has won' do
+        
+      end
+
+    end
+  end
 end
