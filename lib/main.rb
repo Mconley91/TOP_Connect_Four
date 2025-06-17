@@ -44,13 +44,16 @@ class Game
   end
 
   def handle_play
-    play = make_play
-
+    make_board
+    loop do
+      display_game
+      place_play(make_play)
+      display_game
+      cycle_player(@player_turn)
+    end
   end
 end
 
 # test play area-------------
-# test_game = Game.new
-# test_game.make_board
-# test_game.make_play 
-# test_game.display_game
+test_game = Game.new
+test_game.handle_play
