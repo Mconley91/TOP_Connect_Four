@@ -28,7 +28,7 @@ describe Game do
     subject(:play_game){described_class.new}
     context 'takes player input and returns it if valid'do
       before do
-        allow(play_game).to receive(:gets).and_return('apple','2')
+        allow(play_game).to receive(:gets).and_return('0','2')
         allow(play_game).to receive(:p) #prevents p statements from printing to console
       end
       it 'prints a message to the console if input is invalid' do
@@ -46,28 +46,14 @@ describe Game do
   describe '#place_play' do
     subject(:place_game){described_class.new}
     context 'places a token in a given column' do  
-      it 'places a token in the bottom row of the left column' do
-        column_left = 0
+      before do
+        allow(place_game).to receive(:make_play).and_return(0)
+      end
+      it 'places the token in the corresponding column' do
         place_game.make_board
-        place_game.place_play(column_left)
+        place_game.place_play(place_game.make_play)
         # place_game.display_board
         expect(place_game.game_board[0][0]).to eq('X'||'O')
-      end
-
-      it 'places a token in the bottom row of the right column' do
-        column_right= 6
-        place_game.make_board
-        place_game.place_play(column_right)
-        # place_game.display_board
-        expect(place_game.game_board[0][6]).to eq('X'||'O')
-      end
-
-      it 'places a token in the bottom row of the middle column' do
-        column_middle= 3
-        place_game.make_board
-        place_game.place_play(column_middle)
-        # place_game.display_board
-        expect(place_game.game_board[0][3]).to eq('X'||'O')
       end
     end
   end

@@ -13,7 +13,7 @@ class Game
 
   include Output_To_Terminal
 
-  # row array is reversed so that indexes match with display
+  # array is reversed so that indexes match when array is displayed bottom-to-top
   def make_board
     @game_board = Array.new(6){Array.new(7){"_"}.reverse}
   end
@@ -55,5 +55,5 @@ class Game
 end
 
 # test play area-------------
-test_game = Game.new
-test_game.handle_play
+# test_game = Game.new
+# test_game.handle_play
