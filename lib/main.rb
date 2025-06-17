@@ -3,7 +3,7 @@
 require './lib/output.rb'
 
 class Game 
-  attr_accessor :game_board , :player_turn
+  attr_accessor :game_board , :player_turn, :round
   
   def initialize
     @round = 1
@@ -43,11 +43,16 @@ class Game
     @player_turn = player == 'X' ? 'O' : 'X'
   end
 
+  def increment_round
+    @round += 1
+  end
+
   def handle_play
     make_board
     loop do
       display_game
       place_play(make_play)
+      increment_round
       display_game
       cycle_player(@player_turn)
     end

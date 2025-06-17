@@ -105,4 +105,13 @@ describe Game do
     end
   end
 
+  describe '#increment_round' do
+  subject(:test_increment_game){described_class.new}
+    context 'increments the round' do
+      it 'by one' do
+        test_increment_game.increment_round
+        expect(test_increment_game.round).to be(2)
+      end
+    end
+  end
 end
