@@ -48,11 +48,27 @@ class Game
   end
 
   def winning_plays
+    # horizontal wins
     @game_board.each do |row|
       return true if row[0..3].all?{|play| play == @player_turn}
       return true if row[1..4].all?{|play| play == @player_turn}
       return true if row[2..5].all?{|play| play == @player_turn} 
       return true if row[3..6].all?{|play| play == @player_turn}  
+    end
+    # verticle wins
+    7.times do |i|
+      return true if @game_board[0][i] == @player_turn &&
+                     @game_board[1][i] == @player_turn &&
+                     @game_board[2][i] == @player_turn &&
+                     @game_board[3][i] == @player_turn
+      return true if @game_board[1][i] == @player_turn &&
+                     @game_board[2][i] == @player_turn &&
+                     @game_board[3][i] == @player_turn &&
+                     @game_board[4][i] == @player_turn
+      return true if @game_board[2][i] == @player_turn &&
+                     @game_board[3][i] == @player_turn &&
+                     @game_board[4][i] == @player_turn &&
+                     @game_board[5][i] == @player_turn
     end
     false
   end
@@ -74,5 +90,5 @@ class Game
 end
 
 # test play area-------------
-test_game = Game.new
-test_game.handle_play
+# test_game = Game.new
+# test_game.handle_play

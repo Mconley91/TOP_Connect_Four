@@ -116,14 +116,40 @@ describe Game do
   end
 
   describe '#winning_plays' do
+  subject(:test_win_game){described_class.new}
     context 'returns a bool if there is a winner' do
-      it 'returns true when a player has won' do
-        
-      end
-      it 'returns false if no player has won' do
-        
+      it 'returns true when a player has won with a horizontal play' do
+        test_win_game.make_board
+        test_win_game.place_play(3)
+        test_win_game.place_play(4)
+        test_win_game.place_play(5)
+        test_win_game.place_play(6)
+        # test_win_game.display_game
+        expect(test_win_game.winning_plays).to be(true)
       end
 
+      it 'returns true when a player has won with a verticle play' do
+        test_win_game.make_board
+        test_win_game.place_play(3)
+        test_win_game.place_play(3)
+        test_win_game.place_play(3)
+        test_win_game.place_play(3)
+        # test_win_game.display_game
+        expect(test_win_game.winning_plays).to be(true)
+      end
+
+      it 'returns false if no player has won' do
+        test_win_game.make_board
+        test_win_game.place_play(0)
+        test_win_game.place_play(4)
+        test_win_game.place_play(5)
+        test_win_game.place_play(6)
+        # test_win_game.display_game
+        expect(test_win_game.winning_plays).to be(false)
+      end
     end
   end
+
+
+
 end
