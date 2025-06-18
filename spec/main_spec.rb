@@ -150,6 +150,15 @@ describe Game do
     end
   end
 
-
+  describe '#set_last_play' do
+  subject(:test_coords_game){described_class.new}
+    context 'changes the state of @play_coords' do
+      it 'changes @play_coords to the last play made' do
+        test_coords_game.make_board
+        test_coords_game.set_last_play(test_coords_game.game_board[0],0)
+        expect(test_coords_game.play_coords).to eq([0,0])
+      end
+    end
+  end
 
 end
