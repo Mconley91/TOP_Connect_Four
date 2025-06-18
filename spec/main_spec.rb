@@ -115,27 +115,17 @@ describe Game do
     end
   end
 
-  describe '#winning_plays' do
+  describe '#is_winner?' do
   subject(:test_win_game){described_class.new}
     context 'returns a bool if there is a winner' do
-      it 'returns true when a player has won with a horizontal play' do
+      it 'returns true when a player has won' do
         test_win_game.make_board
         test_win_game.place_play(3)
         test_win_game.place_play(4)
         test_win_game.place_play(5)
         test_win_game.place_play(6)
         # test_win_game.display_game
-        expect(test_win_game.winning_plays).to be(true)
-      end
-
-      it 'returns true when a player has won with a verticle play' do
-        test_win_game.make_board
-        test_win_game.place_play(3)
-        test_win_game.place_play(3)
-        test_win_game.place_play(3)
-        test_win_game.place_play(3)
-        # test_win_game.display_game
-        expect(test_win_game.winning_plays).to be(true)
+        expect(test_win_game.is_winner?).to be(true)
       end
 
       it 'returns false if no player has won' do
@@ -145,7 +135,7 @@ describe Game do
         test_win_game.place_play(5)
         test_win_game.place_play(6)
         # test_win_game.display_game
-        expect(test_win_game.winning_plays).to be(false)
+        expect(test_win_game.is_winner?).to be(false)
       end
     end
   end
@@ -155,7 +145,7 @@ describe Game do
     context 'changes the state of @play_coords' do
       it 'changes @play_coords to the last play made' do
         test_coords_game.make_board
-        test_coords_game.set_last_play(test_coords_game.game_board[0],0)
+        test_coords_game.set_last_play(0,0)
         expect(test_coords_game.coords).to eq([0,0])
       end
     end

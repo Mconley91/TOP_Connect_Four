@@ -53,58 +53,66 @@ class Game
     @round += 1
   end
 
-  def winning_plays
-    # using coordinates we can 'look' in any direction from a successfully placed play
-    # and determine if a 4 in a row exists
+  def is_winner?
     row = @coords[0]
     column = @coords[1]
-    # p "#{row} + #{column}"
-
-    arr = []
-    4.times {|i|arr << @game_board[row][column + i]} #looks to the right
-    return true if arr.all?{|play| play == @player_turn}
-    
-    arr = []
-    4.times {|i|arr << @game_board[row][column - i]} #looks to the left
-    return true if arr.all?{|play| play == @player_turn}
-
-    arr = []
-    4.times {|i|arr << @game_board[row - i][column]} #looks down, not working as intended...
-    arr.each_with_index{|item,index| p "#{item} @ #{index}"}
-    return true if arr.all?{|play| play == @player_turn}
-    
-    # @game_board.each do |row|
-    #   return true if row[0..3].all?{|play| play == @player_turn}
-    #   return true if row[1..4].all?{|play| play == @player_turn}
-    #   return true if row[2..5].all?{|play| play == @player_turn} 
-    #   return true if row[3..6].all?{|play| play == @player_turn}  
-    # end
-    # verticle wins
-    # 7.times do |i|
-    #   return true if @game_board[0][i] == @player_turn &&
-    #                  @game_board[1][i] == @player_turn &&
-    #                  @game_board[2][i] == @player_turn &&
-    #                  @game_board[3][i] == @player_turn
-    #   return true if @game_board[1][i] == @player_turn &&
-    #                  @game_board[2][i] == @player_turn &&
-    #                  @game_board[3][i] == @player_turn &&
-    #                  @game_board[4][i] == @player_turn
-    #   return true if @game_board[2][i] == @player_turn &&
-    #                  @game_board[3][i] == @player_turn &&
-    #                  @game_board[4][i] == @player_turn &&
-    #                  @game_board[5][i] == @player_turn
-    # end
-    # diagonal wins
+    return true if horizontal_win?(row,column)
+    return true if vertical_win?(row,column)
+    return true if diagonal_win?(row,column)
     false
   end
 
+  def horizontal_win?(row,column)
+    right = 0
+    left = 0
+    4.times do |i|
+      @game_board[row][column + i] == @player_turn ? right += 1 : break
+    end
+    4.times do |i|
+      @game_board[row][column - i] == @player_turn ? left += 1 : break
+    end
+    right_left = right + left - 1
+    return true if left == 4 || right == 4 || right_left == 4
+  end
+
+  def vertical_win?(row,column)
+    down = 0
+    4.times do |i|
+      @game_board[row - i][column] == @player_turn ? down += 1 : break
+    end
+    return true if down == 4
+  end
+
+  def diagonal_win?(row,column)
+    top_right = 0
+    bottom_right = 0
+    bottom_left = 0
+    top_left = 0
+    4.times do |i|
+      @game_board[row + i][column + i] == @player_turn ? top_right += 1 : break
+    end
+    4.times do |i|
+      @game_board[row - i][column + i] == @player_turn ? bottom_right += 1 : break
+    end
+    4.times do |i|
+      @game_board[row - i][column - i] == @player_turn ? bottom_left += 1 : break
+    end
+    4.times do |i|
+      @game_board[row + i][column - i] == @player_turn ? top_left += 1 : break
+    end
+    top_right_bottom_left = top_right + bottom_left - 1
+    bottom_right_top_left = bottom_right + top_left - 1
+    return true if top_right == 4 || bottom_right == 4 ||
+                   bottom_left == 4 || top_left == 4 ||
+                   top_right_bottom_left == 4 || bottom_right_top_left == 4
+  end
 
   def handle_play
     make_board
     display_game
     loop do
       place_play(make_play)
-      if winning_plays
+      if is_winner?
         display_victory
         return
       end
@@ -116,5 +124,5 @@ class Game
 end
 
 # test play area-------------
-test_game = Game.new
-test_game.handle_play
+# test_game = Game.new
+# test_game.handle_play
