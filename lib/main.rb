@@ -28,17 +28,17 @@ class Game
   end
 
   def place_play(column)
-    @game_board.each do|row| 
+    @game_board.each_with_index do|row,row_index| 
       if row[column] == '_'
         row[column] = @player_turn
-        set_last_play(row, column)
+        set_last_play(row_index, column)
         return
       end
     end
   end
 
-  def set_last_play(row, column)
-    @coords = [@game_board.find_index(row), column]
+  def set_last_play(row_index, column_index)
+    @coords = [row_index, column_index]
   end
 
   def full_column?(column)
@@ -58,6 +58,7 @@ class Game
     # and determine if a 4 in a row exists
     row = @coords[0]
     column = @coords[1]
+    # p "#{row} + #{column}"
 
     arr = []
     4.times {|i|arr << @game_board[row][column + i]} #looks to the right
@@ -69,7 +70,7 @@ class Game
 
     arr = []
     4.times {|i|arr << @game_board[row - i][column]} #looks down, not working as intended...
-    p arr
+    arr.each_with_index{|item,index| p "#{item} @ #{index}"}
     return true if arr.all?{|play| play == @player_turn}
     
     # @game_board.each do |row|
@@ -110,7 +111,6 @@ class Game
       increment_round
       cycle_player(@player_turn)
       display_game
-      p @coords
     end
   end
 end
