@@ -58,8 +58,20 @@ class Game
     # and determine if a 4 in a row exists
     row = @coords[0]
     column = @coords[1]
-    return true if @game_board[row][column..column + 4].all?{|play| play == @player_turn}
-    return true if @game_board[row][column - 4..column].all?{|play| play == @player_turn}
+
+    arr = []
+    4.times {|i|arr << @game_board[row][column + i]} #looks to the right
+    return true if arr.all?{|play| play == @player_turn}
+    
+    arr = []
+    4.times {|i|arr << @game_board[row][column - i]} #looks to the left
+    return true if arr.all?{|play| play == @player_turn}
+
+    arr = []
+    4.times {|i|arr << @game_board[row - i][column]} #looks down, not working as intended...
+    p arr
+    return true if arr.all?{|play| play == @player_turn}
+    
     # @game_board.each do |row|
     #   return true if row[0..3].all?{|play| play == @player_turn}
     #   return true if row[1..4].all?{|play| play == @player_turn}
@@ -98,6 +110,7 @@ class Game
       increment_round
       cycle_player(@player_turn)
       display_game
+      p @coords
     end
   end
 end
