@@ -115,6 +115,17 @@ describe Game do
     end
   end
 
+    describe '#set_last_play' do
+  subject(:test_coords_game){described_class.new}
+    context 'changes the state of @play_coords' do
+      it 'changes @play_coords to the last play made' do
+        test_coords_game.make_board
+        test_coords_game.set_last_play(0,0)
+        expect(test_coords_game.coords).to eq([0,0])
+      end
+    end
+  end
+
   describe '#is_winner?' do
   subject(:test_win_game){described_class.new}
     context 'returns a bool if there is a winner' do
@@ -140,13 +151,97 @@ describe Game do
     end
   end
 
-  describe '#set_last_play' do
-  subject(:test_coords_game){described_class.new}
-    context 'changes the state of @play_coords' do
-      it 'changes @play_coords to the last play made' do
-        test_coords_game.make_board
-        test_coords_game.set_last_play(0,0)
-        expect(test_coords_game.coords).to eq([0,0])
+  describe "#horizontal_win" do
+  subject(:horizontal_win_game){described_class.new}
+    context 'returns a boolean' do
+      it 'returns true when there is a horizontal win' do
+        row = 0
+        horizontal_win_game.make_board
+        horizontal_win_game.place_play(0)
+        horizontal_win_game.place_play(1)
+        horizontal_win_game.place_play(2)
+        horizontal_win_game.place_play(3)
+        # test_win_game.display_game
+        expect(horizontal_win_game.horizontal_win?(row,3)).to be(true)
+      end
+      it 'is not true when there is no horizontal win'do
+        column = 0
+        horizontal_win_game.make_board
+        horizontal_win_game.place_play(column)
+        horizontal_win_game.place_play(column)
+        horizontal_win_game.place_play(column)
+        horizontal_win_game.place_play(column)
+        # horizontal_win_game.display_game
+        expect(horizontal_win_game.horizontal_win?(3,column)).not_to be(true)
+      end
+    end
+  end
+
+  describe "#vertical_win?" do
+  subject(:vertical_win_game){described_class.new}
+    context 'returns a boolean' do
+      it "returns true when there is a vertical win" do
+        column = 0
+        vertical_win_game.make_board
+        vertical_win_game.place_play(column)
+        vertical_win_game.place_play(column)
+        vertical_win_game.place_play(column)
+        vertical_win_game.place_play(column)
+        # vertical_win_game.display_game
+        expect(vertical_win_game.vertical_win?(3,column)).to be(true)
+      end
+      it "does not return true when there is no vertical win" do
+        row = 0
+        vertical_win_game.make_board
+        vertical_win_game.place_play(0)
+        vertical_win_game.place_play(1)
+        vertical_win_game.place_play(2)
+        vertical_win_game.place_play(3)
+        # vertical_win_game.display_game
+        expect(vertical_win_game.vertical_win?(row,3)).not_to be(true)
+      end
+    end
+  end
+
+  describe "#diagonal_win?" do
+  subject(:diagonal_win_game){described_class.new}
+    context "returns a boolean if there is a diagonal win" do
+      it "returns true when there is a diagonal win" do
+        diagonal_win_game.make_board
+        diagonal_win_game.place_play(0)
+        diagonal_win_game.cycle_player('X')
+        diagonal_win_game.place_play(1)
+        diagonal_win_game.cycle_player('O')
+        diagonal_win_game.place_play(1)
+        diagonal_win_game.place_play(2)
+        diagonal_win_game.place_play(2)
+        diagonal_win_game.place_play(2)
+        diagonal_win_game.cycle_player('X')
+        diagonal_win_game.place_play(3)
+        diagonal_win_game.place_play(3)
+        diagonal_win_game.place_play(3)
+        diagonal_win_game.cycle_player('O')
+        diagonal_win_game.place_play(3)
+        # diagonal_win_game.display_game
+        expect(diagonal_win_game.diagonal_win?(3,3)).to be(true)
+      end
+      it "does not return true when there is no diagonal win" do
+        diagonal_win_game.make_board
+        diagonal_win_game.place_play(0)
+        diagonal_win_game.cycle_player('X')
+        diagonal_win_game.place_play(1)
+        diagonal_win_game.cycle_player('O')
+        diagonal_win_game.place_play(1)
+        diagonal_win_game.place_play(2)
+        diagonal_win_game.place_play(2)
+        diagonal_win_game.place_play(2)
+        diagonal_win_game.cycle_player('X')
+        diagonal_win_game.place_play(3)
+        diagonal_win_game.place_play(3)
+        diagonal_win_game.place_play(3)
+        diagonal_win_game.place_play(3)
+        # diagonal_win_game.display_game
+        expect(diagonal_win_game.diagonal_win?(3,3)).not_to be(true)
       end
     end
   end
