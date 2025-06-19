@@ -89,7 +89,7 @@ class Game
     bottom_left = 0
     top_left = 0
     4.times do |i|
-      @game_board[row + i][column + i] == @player_turn ? top_right += 1 : break
+      @game_board[row + i <= 5 ? row + i : break][column + i] == @player_turn ? top_right += 1 : break
     end
     4.times do |i|
       @game_board[row - i][column + i] == @player_turn ? bottom_right += 1 : break
@@ -98,13 +98,19 @@ class Game
       @game_board[row - i][column - i] == @player_turn ? bottom_left += 1 : break
     end
     4.times do |i|
-      @game_board[row + i][column - i] == @player_turn ? top_left += 1 : break
+      if @game_board[row + i >= 5 ? row + i : break] != nil
+        @game_board[row + i >= 5 ? row + i : break][column - i > 0 ? column - i : break] == @player_turn ? top_left += 1 : break
+      end
     end
     top_right_bottom_left = top_right + bottom_left - 1
     bottom_right_top_left = bottom_right + top_left - 1
     return true if top_right == 4 || bottom_right == 4 ||
                    bottom_left == 4 || top_left == 4 ||
                    top_right_bottom_left == 4 || bottom_right_top_left == 4
+  end
+
+  def is_tie?
+    return true if @game_board.all?{|array| array.all?{|element| element != '_'}} && !is_winner?
   end
 
   def handle_play
@@ -115,6 +121,9 @@ class Game
       if is_winner?
         display_victory
         return
+      elsif is_tie?
+        display_tie
+        return
       end
       increment_round
       cycle_player(@player_turn)
@@ -124,5 +133,5 @@ class Game
 end
 
 # test play area-------------
-# test_game = Game.new
-# test_game.handle_play
+test_game = Game.new
+test_game.handle_play

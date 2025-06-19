@@ -29,4 +29,10 @@ module Output_To_Terminal
     display_column_numbers
     display_board
   end
+
+  def display_tie
+    p "Cat's game!"
+    display_column_numbers
+    display_board
+  end
 end

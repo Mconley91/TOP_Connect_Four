@@ -246,4 +246,25 @@ describe Game do
     end
   end
 
+  describe "is_tie?" do
+    subject(:tie_game){described_class.new}
+    context "returns a boolean when there is a tie" do
+      it "returns true if there is a tie" do
+        tie_game.game_board = [['X','O','X','O','X','O','X'],
+                              ['X','O','X','O','X','O','X'],
+                              ['X','O','X','O','X','O','X'],
+                              ['O','X','O','X','O','X','O'],
+                              ['O','X','O','X','O','X','O'],
+                              ['O','X','O','X','O','X','O']]
+        tie_game.coords = [0,0]
+        expect(tie_game.is_tie?).to be(true)
+      end
+      it "returns not true if there is no tie" do
+        tie_game.game_board = Array.new(6){Array.new(7){"X"}}
+        tie_game.coords = [0,0]
+        expect(tie_game.is_tie?).not_to be(true)
+      end
+    end
+  end
+
 end
